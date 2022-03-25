@@ -8,7 +8,11 @@ public class PlayerController : MonoBehaviour
     public GameObject centerLaserPrefab, tripleShotLaserPrefab;
     public GameObject shieldsGameObject;
 
+    [SerializeField]
+    private GameObject[] _sideThrusters;
+
     public int lives = 3;
+    private int _hitCount;
 
     public float moveSpeed = 3f;
 
@@ -52,6 +56,8 @@ public class PlayerController : MonoBehaviour
         {
             _uiManager.UpdateLives(lives);
         }
+
+        _hitCount = 0;
   
     }//Start
     
@@ -79,8 +85,8 @@ public class PlayerController : MonoBehaviour
         if(isSpeedBoostActive == true)
         {
             // move player (1.5x the normal speed)                  
-            transform.Translate(Vector3.right * Time.deltaTime * moveSpeed * 5.0f * _horizontalInput);
-            transform.Translate(Vector3.up * Time.deltaTime * moveSpeed * 5.0f * _verticalInput);
+            transform.Translate(Vector3.right * Time.deltaTime * moveSpeed * 2.0f * _horizontalInput);
+            transform.Translate(Vector3.up * Time.deltaTime * moveSpeed * 2.0f * _verticalInput);
         }
         else
         {
@@ -149,6 +155,17 @@ public class PlayerController : MonoBehaviour
             shieldsGameObject.SetActive(false);
             return;
             //------------------------------------------------------------ will not execute
+        }
+
+        _hitCount++;
+
+        if(_hitCount == 1)
+        {
+            _sideThrusters[0].SetActive(true);
+
+        }else if(_hitCount == 2)
+        {
+            _sideThrusters[1].SetActive(true);
         }
 
         // subtract 1 life from the player
