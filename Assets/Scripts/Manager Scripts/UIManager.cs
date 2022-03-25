@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,6 +12,14 @@ public class UIManager : MonoBehaviour
     public Text scoreText;
 
     public int score;
+
+    private void Update()
+    {
+        if(score == 100)
+        {
+            StartCoroutine(GoToLevelTwo());
+        }
+    }
 
 
     public void UpdateLives(int currentLives)
@@ -35,5 +44,11 @@ public class UIManager : MonoBehaviour
         scoreText.text = "Score: 0";
 
     }// HideTitleScreen
+
+    private IEnumerator GoToLevelTwo()
+    {
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene("Gameplay 2");
+    }
 
 }// class
